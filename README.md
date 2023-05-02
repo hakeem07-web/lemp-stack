@@ -45,10 +45,21 @@ After running the file code, PHP then passes the resulting data back to the Ngin
 **Step one: Launch a Virtual Server with Ubuntu Server OS**
 The operating system of our LAMP stack is a Linux server and we need a Linux machine with the right specifications to successfully deploy our LEMP stack. 
 Sign in to the AWS Management Console as an IAM user
+
 Navigate to the EC2 dashboard by typing **“EC2”** on the search bar and clicking on EC2 to go to the EC2 dashboard.
+
 Click on the **“Launch Instance”** button
+
+![Uploading 1.png…]()
+
+
 Give your instance name (E.g., MyLinuxinstance)
+
+![2](https://user-images.githubusercontent.com/130447223/235720730-c078dfdd-8534-4d76-b8ab-4be2441cadff.png)
+
 Choose an Amazon Machine Image (AMI) for your instance. The AMI is a pre-configured virtual machine image that contains the operating system and other software required for your application. For this project, we will be launching an **Ubuntu instance.** Type **“Ubuntu”** on the search bar to show all available Ubuntu AMIs. Select “Ubuntu Server 20.04 LTS (HVM), SSD Volume Type, 64-bit (x86)” which is free tier eligible.
+
+
 On the Instance Type, select “t2.micro”, this is free tier eligible.
 Select a key pair from your existing keypairs for the region you are in. If you don’t have an existing keypair, click on “Create new key Pair” to create a new key pair.
 Enter a name for your key pair
