@@ -239,13 +239,17 @@ Y
 Test if you can log in to the MySQL console by typing:
 ```
 # Test if the password was set successfully
-sudo mysql -p
-
-# Exit MySQL shell
-exit
 ```
 ![18](https://user-images.githubusercontent.com/130447223/235974325-a9f7c577-7c40-4eac-8e40-451e553cf1de.png)
 ![19](https://user-images.githubusercontent.com/130447223/235974397-c1d581c3-29f4-41da-98c6-042da6d3cb83.png)
+
+sudo mysql -p
+
+![20](https://user-images.githubusercontent.com/130447223/236061421-7783c812-f5c8-4c2a-a834-ea24a6e5c62d.png)
+
+# Exit MySQL shell
+exit
+
 
 The -p flag would prompt you to enter your password. Enter your set password to proceed.
 If you are able to access it, MySQL is now set up and secure. You can proceed to step 4 to install PHP.
@@ -265,7 +269,9 @@ sudo apt install php-fpm php-mysql -y
 # Check php version
 php -v
 ```
-  
+![21](https://user-images.githubusercontent.com/130447223/236061585-290c399e-d37f-4aca-a9e1-4f5a42075fe1.png)
+![22](https://user-images.githubusercontent.com/130447223/236061710-8d170f61-08e6-437c-82dc-4531d6f0906b.png)
+
 STEP 5: CONFIGURING NGINX TO USE PHP PROCESSOR
 
 Similar to creating a virtual host in Apache, when using the nginx web server, we can create server blocks
@@ -312,6 +318,8 @@ server {
 
 }
 ```
+![23](https://user-images.githubusercontent.com/130447223/236061843-0ab99332-373c-4f8b-b9a3-36b9d88d1e89.png)
+
 After editing this file using nano, save and close the file by typing CTRL+X
 
 In the above configuration:
@@ -338,6 +346,8 @@ sudo ln -s /etc/nginx/sites-available/lempstackproject /etc/nginx/sites-enabled/
 # Test for syntax error:
 sudo nginx -t
 ```
+![24](https://user-images.githubusercontent.com/130447223/236061953-2409925f-fe39-408a-8032-4350b3ca553e.png)
+
 Next, we need to disable the default Nginx host that is currently configured to listen on port 80 
 and reload Nginx to apply the changes by running the below line of code:
 ```
@@ -353,10 +363,12 @@ Create an index.html file in that location so that we can test that the virtual 
 sudo echo 'Hello LEMP from hostname' $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/lempstackproject/index.html
 ```
 We can now access the website by entering the public IP address on our browser (i.e.,http://13.40.228.161/)
-  
+   
+![25](https://user-images.githubusercontent.com/130447223/236062128-05d6fef5-1d4b-42d9-b9b3-e8ec6385810b.png)
+
 EMP stack is now fully configured; next, we will create a PHP script to test that Nginx is able to handle .php files
 within our newly configured website.
-  
+
 STEP 6: TESTING PHP WITH NGINX
 
 LEMP stack is now fully installed and operational. we will now be testing it to validate
@@ -366,12 +378,15 @@ First, we need to create a test PHP file in the document root directory and try 
 # Create test php file
 sudo nano /var/www/lempstackproject/info.php
 
+![26](https://user-images.githubusercontent.com/130447223/236062286-9e9a705e-e4d1-4808-a7b0-0f60cf4b769c.png)
+
 # Insert the below text into this file, save, and close.
 <?php
 phpinfo();
 ```
 Access this page in your browser by entering the public IP address or domain name you set on your configuration file, followed by /info.php into your browser (i.e.,http://13.40.228.161/info.php)
 
+![27](https://user-images.githubusercontent.com/130447223/236062422-2d1e034a-ecb5-4f9a-8b2e-2f837b9628a5.png)
 
 Remove this page after checking the relevant information:
 ```
@@ -390,6 +405,8 @@ which is the default authentication method for mySQL 8.
 # connect to the MySQL console using the root account
 sudo mysql -p
 
+![28](https://user-images.githubusercontent.com/130447223/236062462-abb8abec-9d6b-4380-b3f7-f96d3e606c4a.png)
+
 # create a new database called "example_database
 mysql> CREATE DATABASE example_database;
 
@@ -399,6 +416,8 @@ mysql>  CREATE USER 'example_user'@'%' IDENTIFIED WITH mysql_native_password BY 
 # Give this user permission over the example_database database
 mysql> GRANT ALL ON example_database.* TO 'example_user'@'%';
 
+![29](https://user-images.githubusercontent.com/130447223/236062526-1b49b01e-f109-4d97-bbff-4a1e8bb7f3cb.png)
+
 # Exit MySQL Shell
 mysql> exit
 ```
@@ -406,10 +425,14 @@ Test if this new user has permission to access MySQL:
 ```
 mysql -u example_user -p
 ```
+![30](https://user-images.githubusercontent.com/130447223/236062717-dcd59e35-32a3-44fe-bee4-98b305b2a020.png)
+
 Confirm that this user has access to example_database:
 ```
 mysql> SHOW DATABASES;
 ```
+![31](https://user-images.githubusercontent.com/130447223/236062793-95696995-fe2d-46c8-928e-022a47e3955c.png)
+
 Next, we’ll create a test table named todo_list. From the MySQL console, run the following statement:
 ```
 #Set database
@@ -422,12 +445,16 @@ mysql> CREATE TABLE todo_list (
     -> PRIMARY KEY(item_id)
     -> );
 
+![32](https://user-images.githubusercontent.com/130447223/236062866-532250d8-49fa-4ec3-a6b9-c46b6adf3071.png)
+
 # Insert a few records in the test table. Enter the below command multiple times incrementing the value
 mysql> INSERT INTO example_database.todo_list (content) VALUES ("My first important item");
 mysql> INSERT INTO example_database.todo_list (content) VALUES ("My second important item");
 
 # View this table
 mysql>  SELECT * FROM example_database.todo_list;
+
+![33](https://user-images.githubusercontent.com/130447223/236063015-f2541078-2481-47f9-977c-5020f104d9e3.png)
 
 # exist MySQL Shell
 mysql> exit
@@ -436,6 +463,8 @@ Now we will create a new PHP script in the custom web root directory that will c
 ```
 # Create php script in the custom web root directory
 nano /var/www/lempstackproject/todo_list.php
+
+![34](https://user-images.githubusercontent.com/130447223/236063193-7b3c157d-537f-46e1-83ff-0434c85972eb.png)
 
 # Enter the below text in the script and save:
 
@@ -460,7 +489,7 @@ try {
 Access this page in your web browser by visiting the domain name or public IP address configured for your website,
 followed by /todo_list.php (i.e., http://13.40.228.161/todo_list.php)
 
-
+![35](https://user-images.githubusercontent.com/130447223/236063263-cbae9607-3f25-4825-a59d-1d6e03dbc98b.png)
 
 This implies your PHP environment is ready to connect to and interact with your MySQL server.
 
