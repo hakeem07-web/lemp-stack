@@ -101,7 +101,9 @@ Click on “Create key pair” to create a new key pair. Note that key Pairs are
 ![4](https://user-images.githubusercontent.com/130447223/235752918-ae6fa45a-a65d-47ac-8a9b-70a98c038918.png)
 
 We have successfully launched an Ubuntu ec2 instance to the server as our operating system,
-next we will connect to this instance to set up all other components of our LAMP stack.
+next we will connect to this instance to set up all other components of our LEMP stack.
+
+![5](https://user-images.githubusercontent.com/130447223/235969843-be15a60e-5e9a-45d6-8afd-4e86117c2f02.png)
 
 **Connecting to our EC2 instance**
 
@@ -128,9 +130,14 @@ Connect to the ubuntu instance using the below command:
 ```
 ssh -i <MyKeyPair>.pem ubuntu@<Public_IP-address>
 ```
- **NOTE:** You can get the public ip of your EC2 instance from the management console by clicking
-  on your instance and copying the “Public IPv4 address”. 
-  
+   
+![7](https://user-images.githubusercontent.com/130447223/235969415-f6ec568e-5f99-40fe-96fa-3e54d08029dd.png)
+
+**NOTE:** You can get the public ip of your EC2 instance from the management console by clicking
+on your instance and copying the “Public IPv4 address”.
+   
+![6](https://user-images.githubusercontent.com/130447223/235969585-c0900cc7-0a0b-42e2-b884-7cbb343c2eb6.png)
+
 **Step 2: INSTALLING NGINX AND UPDATING THE FIREWALL**
 ```  
 # Update all packages in package manager
@@ -141,20 +148,32 @@ sudo apt install nginx
 
 # Verify that nginx is up and running in our OS after successfully installation:
 sudo systemctl status nginx
-```  
+``` 
+![8](https://user-images.githubusercontent.com/130447223/235970371-a9be7d47-48a7-4c08-9105-44e2353c939c.png)
+ 
 If the status shows a green “active (running)” You have successfully launched a web server on the cloud.
-  
+   
+![9](https://user-images.githubusercontent.com/130447223/235970565-198df8f5-f25f-4ee6-9789-f4e14865c3ea.png)
+
 Next we will edit our security group rule to open TCP port 80 to enable http connection from anywhere on the internet.
-  Recall that we only opened port 22 when we created our instance. 
+Recall that we only opened port 22 when we created our instance. 
 Begin by navigating to your EC2 instance on the AWS Console. Click on the security group tab
-  and edit the inbound rules of the running EC2 instance.
-Then click on edit **inbound rules** as shown below.
   
+![10](https://user-images.githubusercontent.com/130447223/235970950-47b2339a-c689-42c5-b221-662773182e84.png)
+
+and edit the inbound rules of the running EC2 instance.
+Then click on edit **inbound rules** as shown below.
+   
+![11](https://user-images.githubusercontent.com/130447223/235971102-dcc33caa-7435-4fa6-8b78-c2a523a0dab4.png)
+
 Then click on **Add rule** and configure the inbound rules using **HTTP** as the protocol and **0.0.0.0/0** as the source,
 so that traffic from any IP address can enter as shown below.
-  
-  
+
+![12](https://user-images.githubusercontent.com/130447223/235971304-9c9795a5-0d48-4666-bb28-fba9c291706f.png)
+
 Our server is running and we can access it locally and from the Internet (Source 0.0.0.0/0 means ‘from any IP address’).
+   
+![13](https://user-images.githubusercontent.com/130447223/235971814-a4e4b8d1-511c-4059-99dc-2ec89d57750a.png)
 
 First, let us try to check how we can access it locally in our Ubuntu shell, On the Terminal, use the following command
 to send a request our Nginx on port 80.
@@ -164,27 +183,32 @@ or
 $ curl http://127.0.0.1:80
 ```
 You will see something like picture below in your terminal
-  
+
+![14](https://user-images.githubusercontent.com/130447223/235972049-10dbe062-ec2d-44ba-bcc6-80a8c6d593eb.png)
+
 Next, we verify that we can access web server through the web browser using the public IP address of the EC2 instance.
 So, open a web browser of your choice and then enter the following url
 (remember to replace contents within the Anchor Tabs < > as was instructed in the beginning.
 ```
 http://<Public-IP-Address>:80
 ```  
-This will display the default apache2 server webpage
-  
-  
+This will display the default nginx server webpage
+   
+![15](https://user-images.githubusercontent.com/130447223/235972396-d99c3fe7-82cc-4804-881c-9aa54ec7c091.png)
+
 **STEP 3: INSTALL MYSQL**
 At this point we have successfully set up our web server,
-  we now need to set up a database management system to be able to store and manage data for our website in a relational database.
-  We will be using MySQL for this project. This is the most popular RDBMS used within PHP environments.
+we now need to set up a database management system to be able to store and manage data for our website in a relational database.
+We will be using MySQL for this project. This is the most popular RDBMS used within PHP environments.
 
 **Install mysql-server:**
 ```
   sudo apt install mysql-server -y
 ```  
+![16](https://user-images.githubusercontent.com/130447223/235973031-792e1bcc-b89d-4851-ba74-d65ff86f5841.png)
+
 **When the installation is finished, log in to the MySQL console as an administrative database user root by typing:**
-```    
+``` 
 # Login to MySQL
 sudo mysql
 
@@ -194,6 +218,8 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Password
 #Exit MySQL shell
       exit
 ```
+![17](https://user-images.githubusercontent.com/130447223/235974086-af25f1f1-d694-499c-881e-9a40b1edd570.png)
+
 It is recommended that we run a security script that comes pre-installed with MySQL
 to remove some insecure default settings and lock down access to your database system. 
 This would be done by running an interactive script on the terminal.
@@ -218,6 +244,9 @@ sudo mysql -p
 # Exit MySQL shell
 exit
 ```
+![18](https://user-images.githubusercontent.com/130447223/235974325-a9f7c577-7c40-4eac-8e40-451e553cf1de.png)
+![19](https://user-images.githubusercontent.com/130447223/235974397-c1d581c3-29f4-41da-98c6-042da6d3cb83.png)
+
 The -p flag would prompt you to enter your password. Enter your set password to proceed.
 If you are able to access it, MySQL is now set up and secure. You can proceed to step 4 to install PHP.
   
@@ -346,7 +375,7 @@ Access this page in your browser by entering the public IP address or domain nam
 
 Remove this page after checking the relevant information:
 ```
-sudo rm /var/www/your_domain/info.php
+sudo rm  /var/www/projectLEMP/info.php
 ```
 
 STEP 7: RETRIEVING DATA FROM MYSQL DATABASE WITH PHP
