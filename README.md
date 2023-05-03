@@ -215,8 +215,8 @@ sudo mysql
 # Set a password for the root user using mysql_native_password as default authentication method:
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Password@1';
 
-#Exit MySQL shell
-      exit
+#exit MySQL shell
+exit
 ```
 ![17](https://user-images.githubusercontent.com/130447223/235974086-af25f1f1-d694-499c-881e-9a40b1edd570.png)
 
@@ -236,19 +236,20 @@ Y
 Y
 # For the rest of the options select "Yes"
 ```
+![18](https://user-images.githubusercontent.com/130447223/235974325-a9f7c577-7c40-4eac-8e40-451e553cf1de.png)
+![19](https://user-images.githubusercontent.com/130447223/235974397-c1d581c3-29f4-41da-98c6-042da6d3cb83.png)
 Test if you can log in to the MySQL console by typing:
 ```
 # Test if the password was set successfully
+$ sudo mysql -p
 ```
-![18](https://user-images.githubusercontent.com/130447223/235974325-a9f7c577-7c40-4eac-8e40-451e553cf1de.png)
-![19](https://user-images.githubusercontent.com/130447223/235974397-c1d581c3-29f4-41da-98c6-042da6d3cb83.png)
-
-sudo mysql -p
 
 ![20](https://user-images.githubusercontent.com/130447223/236061421-7783c812-f5c8-4c2a-a834-ea24a6e5c62d.png)
 
-# Exit MySQL shell
-exit
+```
+#exit MySQL shell
+mysql>exit
+```
 
 
 The -p flag would prompt you to enter your password. Enter your set password to proceed.
